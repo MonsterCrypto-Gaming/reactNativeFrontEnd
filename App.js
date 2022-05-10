@@ -17,7 +17,7 @@ import {
   View,
 } from 'react-native';
 import {DARK} from './Theme/Theme';
-import {Home} from './screens';
+import {Home} from './Screens';
 
 const App = () => {
   return (

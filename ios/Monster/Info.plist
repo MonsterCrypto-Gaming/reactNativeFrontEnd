@@ -53,8 +53,18 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
+<<<<<<< HEAD
 		<string>Biryani-Bold.ttf</string>
 		<string>Macondo-Regular.ttf</string>
+=======
+		<string>Biryani-Black.ttf</string>
+		<string>Biryani-Bold.ttf</string>
+		<string>Biryani-ExtraBold.ttf</string>
+		<string>Biryani-ExtraLight.ttf</string>
+		<string>Biryani-Light.ttf</string>
+		<string>Biryani-Regular.ttf</string>
+		<string>Biryani-SemiBold.ttf</string>
+>>>>>>> 5a5d943227b547458e98a9fb738cef941b7af364
 	</array>
 </dict>
 </plist>
