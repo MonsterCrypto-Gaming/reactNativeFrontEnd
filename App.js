@@ -17,17 +17,18 @@ import {
   View,
 } from 'react-native';
 import {DARK} from './Theme/Theme';
+import {Home} from './screens';
 
 const App = () => {
   return (
-    <View
+    <SafeAreaView
       style={{
         width: '100%',
         height: '100%',
         backgroundColor: DARK.BACKGROUND_COLOR,
       }}>
-      <Text>hello</Text>
-    </View>
+      <Home />
+    </SafeAreaView>
   );
 };
 
