@@ -1,28 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Image} from 'react-native';
-// import {styles} from '../assets/styles/cardStyles';
-
-// let CUSTOM_HEIGHT = 40;
-// let CUSTOM_WIDTH = 40;
-
-const Card = ({image, height, width}) => {
-  return (
-    <View
-      style={{
-        ...styles.cardContainer,
-        CUSTOM_HEIGHT: height,
-        CUSTOM_WIDTH: width,
-      }}>
-      <View style={styles.cardImageContainer}>
-        <Image source={image} />
-      </View>
-      <View style={styles.customBoxShadow} />
-    </View>
-  );
-};
-
-export default Card;
-
+/* eslint-disable no-undef */
 export const styles = (CUSTOM_HEIGHT, CUSTOM_WIDTH) =>
   StyleSheet.create({
     cardContainer: {
