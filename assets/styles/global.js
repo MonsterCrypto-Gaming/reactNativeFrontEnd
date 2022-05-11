@@ -4,4 +4,5 @@ export const images = {
   art_two: require('../images/arts-pngs/art_two.png'),
   art_three: require('../images/arts-pngs/art_three.png'),
   art_four: require('../images/arts-pngs/art_four.png'),
+  plus_icon: require('../images/arts-pngs/plus_icon.png'),
 };

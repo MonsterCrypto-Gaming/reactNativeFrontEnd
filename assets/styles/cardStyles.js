@@ -1,13 +1,12 @@
-const cardContainer = (CUSTOM_HEIGHT, CUSTOM_WIDTH) => ({
+const cardContainer = (CUSTOM_HEIGHT, CUSTOM_WIDTH, CUSTOM_COLORS) => ({
   height: CUSTOM_HEIGHT,
   width: CUSTOM_WIDTH,
   borderRadius: 3,
-  backgroundColor: '#DBFF00',
+  backgroundColor: CUSTOM_COLORS[0], // #DBFF00
 });
 
 const cardImageContainer = (CUSTOM_HEIGHT, CUSTOM_WIDTH) => ({
   position: 'absolute',
-  // backgroundColor: '#DBFF00',
   height: CUSTOM_HEIGHT,
   width: CUSTOM_WIDTH,
   borderRadius: 3,
@@ -15,13 +14,13 @@ const cardImageContainer = (CUSTOM_HEIGHT, CUSTOM_WIDTH) => ({
   borderColor: '#000',
   justifyContent: 'center',
   alignItems: 'center',
-  padding: 5,
+  padding: 2,
 });
 
-const cardShadow = (CUSTOM_HEIGHT, CUSTOM_WIDTH) => ({
+const cardShadow = (CUSTOM_HEIGHT, CUSTOM_WIDTH, CUSTOM_COLORS) => ({
   width: CUSTOM_WIDTH + 3,
   height: CUSTOM_HEIGHT,
-  backgroundColor: 'rgba(219, 255, 0, 0.6)',
+  backgroundColor: CUSTOM_COLORS[1],
   opacity: 0.8,
   position: 'absolute',
   zIndex: -1,
@@ -30,4 +29,10 @@ const cardShadow = (CUSTOM_HEIGHT, CUSTOM_WIDTH) => ({
   borderRadius: 3,
 });
 
-export {cardContainer, cardImageContainer, cardShadow};
+const cardImage = (CUSTOM_HEIGHT, CUSTOM_WIDTH) => ({
+  height: CUSTOM_HEIGHT - 10,
+  width: CUSTOM_WIDTH - 10,
+  borderRadius: 3,
+});
+
+export {cardContainer, cardImageContainer, cardImage, cardShadow};
