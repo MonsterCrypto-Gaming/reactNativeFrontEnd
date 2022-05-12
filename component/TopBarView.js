@@ -2,11 +2,17 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Card from './Card';
 
-const TopBarView = ({headline, asset, size}) => {
+const TopBarView = ({headline, asset = null, text = null, size}) => {
   return (
     <View style={styles.topBarPanel}>
       <Text style={styles.headline}>{headline}</Text>
-      <Card image={asset} height={size[0]} width={size[1]} />
+      {asset && <Card image={asset} height={size[0]} width={size[1]} />}
+      {/* {asset && <Card image={asset} height={size[0]} width={size[1]} />} */}
+      {text && (
+        <Card image={asset} height={size[0]} width={size[1]}>
+          <Text style={styles.text}>{text}</Text>
+        </Card>
+      )}
     </View>
   );
 };
@@ -30,5 +36,13 @@ const styles = StyleSheet.create({
     // fontFamily: 'Biryani-Bold',
     fontStyle: 'normal',
     fontWeight: '700',
+  },
+  text: {
+    fontSize: 13,
+    fontWeight: '700',
+    lineHeight: 23,
+    textAlign: 'center',
+    paddingVertical: 5,
+    flex: 1,
   },
 });

@@ -17,7 +17,7 @@ import {
   View,
 } from 'react-native';
 import {DARK} from './Theme/Theme';
-import {Home} from './Screens';
+import {Home, Market} from './Screens';
 
 const App = () => {
   return (
@@ -27,7 +27,7 @@ const App = () => {
         height: '100%',
         backgroundColor: DARK.BACKGROUND_COLOR,
       }}>
-      <Home />
+      <Market />
     </SafeAreaView>
   );
 };
