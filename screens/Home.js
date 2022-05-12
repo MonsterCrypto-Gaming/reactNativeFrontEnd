@@ -124,6 +124,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     paddingRight: 40,
     marginBottom: 90,
+    marginTop: -25,
+    zIndex: -1,
   },
   extraNav: {
     marginVertical: 20,

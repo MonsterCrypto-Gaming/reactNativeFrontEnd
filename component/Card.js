@@ -15,7 +15,7 @@ const Card = ({image, height, width, colors}) => {
   return (
     <View style={cardContainer(cHeight, cWidth, cColor)}>
       <View style={cardImageContainer(cHeight, cWidth)}>
-        <Image source={image} style={cardImage(cHeight, cWidth)} />
+        <Image source={image} />
       </View>
       <View style={cardShadow(cHeight, cWidth, cColor)} />
     </View>
