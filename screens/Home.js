@@ -87,6 +87,15 @@ const Home = () => {
             keyExtractor={item => item.index}
           />
         </View>
+        {/* extra navigation icons */}
+        <View style={styles.extraNavContainer}>
+          <View style={styles.extraNav}>
+            <Card image={images.market_icon} height={50} width={50} />
+          </View>
+          <View style={styles.extraNav}>
+            <Card image={images.bored_ape} height={50} width={50} />
+          </View>
+        </View>
       </ScrollView>
     </View>
   );
@@ -126,6 +135,14 @@ const styles = StyleSheet.create({
   },
   artTokenContiner: {
     alignItems: 'flex-start',
+  },
+  extraNavContainer: {
+    alignItems: 'flex-end',
+    paddingRight: 40,
+    marginBottom: 90,
+  },
+  extraNav: {
+    marginVertical: 20,
   },
 });
 
