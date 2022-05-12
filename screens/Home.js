@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, ScrollView, FlatList, Text, StyleSheet} from 'react-native';
 import {images} from '../assets/styles/global';
-import {Card} from '../component';
+import {Card, TopBarView} from '../component';
 
 const ArtItem = ({art}) => (
   <View style={styles.artItem}>
@@ -49,10 +49,11 @@ const Home = () => {
 
   return (
     <View>
-      <View style={styles.topBarPanel}>
-        <Text style={styles.headline}>your games</Text>
-        <Card image={images.user_placeholder} height={40} width={40} />
-      </View>
+      <TopBarView
+        headline={'your games'}
+        asset={images.user_placeholder}
+        size={[40, 40]}
+      />
       <ScrollView style={styles.mainSection}>
         <View>
           <FlatList
@@ -102,23 +103,6 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
-  topBarPanel: {
-    flexDirection: 'row',
-    height: 70,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 14,
-  },
-  headline: {
-    color: '#fff',
-    fontSize: 26,
-    textShadowColor: 'rgba(219, 255, 0, 0.6)',
-    textShadowOffset: {width: 1.8, height: 1.5},
-    textShadowRadius: 0,
-    // fontFamily: 'Biryani-Bold',
-    fontStyle: 'normal',
-    fontWeight: '700',
-  },
   mainSection: {
     height: '100%',
   },
