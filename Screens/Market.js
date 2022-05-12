@@ -1,16 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   ScrollView,
   TouchableOpacity,
   Text,
   StyleSheet,
+  TextInput,
 } from 'react-native';
 import {images} from '../assets/styles/global';
 import {Card, TopBarView} from '../component';
 import {DARK} from '../Theme/Theme';
 
 const Market = () => {
+  const [textInputValue, setTextInputValue] = useState('');
   const sampleArtData = [
     {
       index: 0,
@@ -49,6 +51,19 @@ const Market = () => {
   return (
     <View>
       <TopBarView headline={'market'} text={'sell an asset'} size={[35, 110]} />
+      <View style={styles.searchInputContainer}>
+        <Card
+          height={60}
+          width={350}
+          colors={['#272727', 'rgba(39, 39, 39, 0.6)']}>
+          <TextInput
+            style={styles.searchInput}
+            onChangeText={text => setTextInputValue(text)}
+            value={textInputValue}
+            placeholder="search a game or tag to buy"
+          />
+        </Card>
+      </View>
       <ScrollView style={styles.mainSection}>
         <View style={styles.artItemContainer}>
           {sampleArtData.map(item => (
@@ -125,6 +140,16 @@ const styles = StyleSheet.create({
     lineHeight: 23,
     textAlign: 'center',
     fontWeight: 'bold',
+  },
+  searchInputContainer: {
+    marginHorizontal: 20,
+  },
+  searchInput: {
+    color: '#787878',
+    fontWeight: 'bold',
+    fontSize: 15,
+    marginVertical: 20,
+    marginHorizontal: 10,
   },
 });
 
