@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {
   View,
-  ScrollView,
   TouchableOpacity,
   Text,
   StyleSheet,
   TextInput,
+  FlatList,
 } from 'react-native';
 import {images} from '../assets/styles/global';
 import {Card, TopBarView} from '../component';
@@ -64,53 +64,55 @@ const Market = () => {
           />
         </Card>
       </View>
-      <ScrollView style={styles.mainSection}>
-        <View style={styles.artItemContainer}>
-          {sampleArtData.map(item => (
-            <View style={styles.artItem}>
-              <Card
-                image={item && item.image}
-                height={150}
-                width={150}
-                colors={[item.baseColor, item.shadowColor]}
-              />
-              {item.token !== '' && (
-                <View style={styles.artTokenContiner}>
-                  <Text style={artToken(item.baseColor)}>
-                    {item && item.token}
-                  </Text>
-                  <View style={styles.buyButtonContainer}>
-                    <Card
-                      height={35}
-                      width={60}
-                      colors={[
-                        DARK.SECONDAY_BACKGROUND_COLOR,
-                        DARK.SECONDAY_BACKGROUND_COLOR,
-                      ]}>
-                      <TouchableOpacity
-                        style={styles.buyButton}
-                        onPress={onPress}>
-                        <Text style={styles.buyButtonText}>Buy</Text>
-                      </TouchableOpacity>
-                    </Card>
+      <View style={styles.artItemContainer}>
+        <FlatList
+          data={sampleArtData}
+          renderItem={({item}) => {
+            return (
+              <View key={item.index} style={styles.artItem}>
+                <Card
+                  image={item && item.image}
+                  height={150}
+                  width={150}
+                  colors={[item.baseColor, item.shadowColor]}
+                />
+                {item.token !== '' && (
+                  <View style={styles.artTokenContiner}>
+                    <Text style={artToken(item.baseColor)}>
+                      {item && item.token}
+                    </Text>
+                    <View style={styles.buyButtonContainer}>
+                      <Card
+                        height={35}
+                        width={60}
+                        colors={[
+                          DARK.SECONDAY_BACKGROUND_COLOR,
+                          DARK.SECONDAY_BACKGROUND_COLOR,
+                        ]}>
+                        <TouchableOpacity
+                          style={styles.buyButton}
+                          onPress={onPress}>
+                          <Text style={styles.buyButtonText}>Buy</Text>
+                        </TouchableOpacity>
+                      </Card>
+                    </View>
                   </View>
-                </View>
-              )}
-            </View>
-          ))}
-        </View>
-      </ScrollView>
+                )}
+              </View>
+            );
+          }}
+          keyExtractor={item => item.index}
+        />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  mainSection: {
-    height: '100%',
-  },
   artItemContainer: {
-    flex: 1,
     margin: 20,
+    height: '100%',
+    paddingBottom: '80%',
   },
   artItem: {
     marginVertical: 10,
