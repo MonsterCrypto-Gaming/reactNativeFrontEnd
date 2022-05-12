@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, ScrollView, FlatList, Text, StyleSheet} from 'react-native';
+import {View, FlatList, Text, StyleSheet} from 'react-native';
 import {images} from '../assets/styles/global';
 import {Card, TopBarView} from '../component';
 
@@ -54,57 +54,55 @@ const Home = () => {
         asset={images.user_placeholder}
         size={[40, 40]}
       />
-      <ScrollView style={styles.mainSection}>
-        <View>
-          <FlatList
-            data={sampleArtData}
-            numColumns={2}
-            renderItem={({item}) => {
-              return (
-                <View style={styles.artItem}>
-                  {item && (
-                    <>
-                      <Card
-                        image={item && item.image}
-                        height={150}
-                        width={150}
-                        colors={[item.baseColor, item.shadowColor]}
-                      />
-                      {item.name !== '' && (
-                        <Text style={styles.artTitle}>{item && item.name}</Text>
-                      )}
-                      {item.token !== '' && (
-                        <View style={styles.artTokenContiner}>
-                          <Text style={artToken(item.baseColor)}>
-                            {item && item.token}
-                          </Text>
-                        </View>
-                      )}
-                    </>
-                  )}
-                </View>
-              );
-            }}
-            keyExtractor={item => item.index}
-          />
+      <View style={styles.mainSection}>
+        <FlatList
+          data={sampleArtData}
+          numColumns={2}
+          renderItem={({item}) => {
+            return (
+              <View style={styles.artItem}>
+                {item && (
+                  <>
+                    <Card
+                      image={item && item.image}
+                      height={150}
+                      width={150}
+                      colors={[item.baseColor, item.shadowColor]}
+                    />
+                    {item.name !== '' && (
+                      <Text style={styles.artTitle}>{item && item.name}</Text>
+                    )}
+                    {item.token !== '' && (
+                      <View style={styles.artTokenContiner}>
+                        <Text style={artToken(item.baseColor)}>
+                          {item && item.token}
+                        </Text>
+                      </View>
+                    )}
+                  </>
+                )}
+              </View>
+            );
+          }}
+          keyExtractor={item => item.index}
+        />
+      </View>
+      {/* extra navigation icons */}
+      <View style={styles.extraNavContainer}>
+        <View style={styles.extraNav}>
+          <Card image={images.market_icon} height={50} width={50} />
         </View>
-        {/* extra navigation icons */}
-        <View style={styles.extraNavContainer}>
-          <View style={styles.extraNav}>
-            <Card image={images.market_icon} height={50} width={50} />
-          </View>
-          <View style={styles.extraNav}>
-            <Card image={images.bored_ape} height={50} width={50} />
-          </View>
+        <View style={styles.extraNav}>
+          <Card image={images.bored_ape} height={50} width={50} />
         </View>
-      </ScrollView>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   mainSection: {
-    height: '100%',
+    // height: '100%',
   },
   artItem: {
     flex: 1,
