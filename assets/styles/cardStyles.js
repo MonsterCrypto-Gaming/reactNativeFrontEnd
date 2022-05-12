@@ -24,8 +24,8 @@ const cardShadow = (CUSTOM_HEIGHT, CUSTOM_WIDTH, CUSTOM_COLORS) => ({
   opacity: 0.8,
   position: 'absolute',
   zIndex: -1,
-  left: CUSTOM_WIDTH / 18 + 1,
-  top: CUSTOM_HEIGHT / 18 + 2,
+  left: CUSTOM_WIDTH / 30 - 1,
+  top: CUSTOM_HEIGHT / 30 + 2,
   borderRadius: 3,
 });
 

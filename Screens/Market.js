@@ -1,80 +1,88 @@
 import React from 'react';
-import {View, ScrollView, FlatList, Text, StyleSheet} from 'react-native';
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+} from 'react-native';
 import {images} from '../assets/styles/global';
 import {Card, TopBarView} from '../component';
+import {DARK} from '../Theme/Theme';
 
 const Market = () => {
   const sampleArtData = [
     {
       index: 0,
-      name: 'Monster Pad',
-      token: '$MOP 34',
+      token: '$MOP 15',
       image: images.art_one,
       baseColor: '#FF9900',
       shadowColor: 'rgba(255, 153, 0, 0.6)',
     },
     {
       index: 1,
-      name: 'Valorant',
-      token: '$VALO 1.2K',
-      image: images.art_two,
-      baseColor: '#F8424F',
-      shadowColor: 'rgba(248, 66, 79, 0.6)',
+      token: '$MOP 5',
+      image: images.art_six,
+      baseColor: '#FF9900',
+      shadowColor: 'rgba(255, 153, 0, 0.6)',
     },
     {
       index: 2,
-      name: 'Clash Royal',
-      token: '$CRL 117',
-      image: images.art_three,
-      baseColor: '#45BDCB',
-      shadowColor: 'rgba(69, 189, 203, 0.6)',
+      token: '$MOP 9',
+      image: images.art_four,
+      baseColor: '#FF9900',
+      shadowColor: 'rgba(255, 153, 0, 0.6)',
     },
     {
       index: 3,
-      name: '',
-      token: '',
-      image: images.plus_icon,
-      baseColor: '#272727',
-      shadowColor: 'rgba(51, 51, 51, 0.6)',
+      token: '$MOP 6',
+      image: images.art_five,
+      baseColor: '#FF9900',
+      shadowColor: 'rgba(255, 153, 0, 0.6)',
     },
   ];
+
+  const onPress = () => {
+    console.log('press');
+  };
 
   return (
     <View>
       <TopBarView headline={'market'} text={'sell an asset'} size={[35, 110]} />
       <ScrollView style={styles.mainSection}>
-        <View>
-          <FlatList
-            data={sampleArtData}
-            numColumns={2}
-            renderItem={({item}) => {
-              return (
-                <View style={styles.artItem}>
-                  {item && (
-                    <>
-                      <Card
-                        image={item && item.image}
-                        height={150}
-                        width={150}
-                        colors={[item.baseColor, item.shadowColor]}
-                      />
-                      {item.name !== '' && (
-                        <Text style={styles.artTitle}>{item && item.name}</Text>
-                      )}
-                      {item.token !== '' && (
-                        <View style={styles.artTokenContiner}>
-                          <Text style={artToken(item.baseColor)}>
-                            {item && item.token}
-                          </Text>
-                        </View>
-                      )}
-                    </>
-                  )}
+        <View style={styles.artItemContainer}>
+          {sampleArtData.map(item => (
+            <View style={styles.artItem}>
+              <Card
+                image={item && item.image}
+                height={150}
+                width={150}
+                colors={[item.baseColor, item.shadowColor]}
+              />
+              {item.token !== '' && (
+                <View style={styles.artTokenContiner}>
+                  <Text style={artToken(item.baseColor)}>
+                    {item && item.token}
+                  </Text>
+                  <View style={styles.buyButtonContainer}>
+                    <Card
+                      height={35}
+                      width={60}
+                      colors={[
+                        DARK.SECONDAY_BACKGROUND_COLOR,
+                        DARK.SECONDAY_BACKGROUND_COLOR,
+                      ]}>
+                      <TouchableOpacity
+                        style={styles.buyButton}
+                        onPress={onPress}>
+                        <Text style={styles.buyButtonText}>Buy</Text>
+                      </TouchableOpacity>
+                    </Card>
+                  </View>
                 </View>
-              );
-            }}
-            keyExtractor={item => item.index}
-          />
+              )}
+            </View>
+          ))}
         </View>
       </ScrollView>
     </View>
@@ -85,9 +93,12 @@ const styles = StyleSheet.create({
   mainSection: {
     height: '100%',
   },
-  artItem: {
+  artItemContainer: {
     flex: 1,
     margin: 20,
+  },
+  artItem: {
+    marginVertical: 10,
   },
   artTitle: {
     fontSize: 14,
@@ -98,16 +109,22 @@ const styles = StyleSheet.create({
   },
   artTokenContiner: {
     alignItems: 'flex-start',
+    marginVertical: 30,
+    flex: 1,
+    flexDirection: 'row',
+    marginHorizontal: 30,
   },
-  extraNavContainer: {
-    alignItems: 'flex-end',
-    paddingRight: 40,
-    marginBottom: 90,
-    marginTop: -25,
-    zIndex: -1,
+  buyButtonContainer: {
+    marginLeft: 50,
   },
-  extraNav: {
-    marginVertical: 20,
+  buyButton: {
+    paddingVertical: 5.5,
+  },
+  buyButtonText: {
+    fontSize: 13,
+    lineHeight: 23,
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
 });
 
@@ -118,8 +135,9 @@ const artToken = color => ({
   marginTop: 4,
   backgroundColor: color,
   width: 'auto',
-  padding: 9,
-  borderRadius: 4,
+  paddingHorizontal: 15,
+  paddingVertical: 9,
+  borderRadius: 3,
 });
 
 // (WIDTH - 0.4 * WIDTH) / 2 + 5
