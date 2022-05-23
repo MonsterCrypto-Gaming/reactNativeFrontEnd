@@ -76,7 +76,7 @@ const App = () => {
 
     <MoralisProvider serverUrl={serverUrl} appId={appId}>
       <WalletConnectProvider
-        // bridge="https://bridge.walletconnect.org"
+        bridge="https://bridge.walletconnect.org"
         // clientMeta={{
         //   description: 'Connect with WalletConnect',
         //   url: 'https://walletconnect.org',
