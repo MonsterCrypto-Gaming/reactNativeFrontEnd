@@ -16,9 +16,9 @@ import { useWalletConnect } from '@walletconnect/react-native-dapp';
 // import {MoralisProvider} from 'react-moralis';
 
 
-const Moralis = require('moralis/react-native.js');
-const AsyncStorage = require('react-native').AsyncStorage;
-Moralis.setAsyncStorage(AsyncStorage);
+// const Moralis = require('moralis/react-native.js');
+// const AsyncStorage = require('react-native').AsyncStorage;
+// Moralis.setAsyncStorage(AsyncStorage);
 
 
 const WIDTH = Dimensions.get('window').width;
@@ -40,7 +40,7 @@ async function getNFTs(){
     console.log('started')
     // console.log(responseStarted)
     const options = {chaim:'eth', address:'0x76E399714E1D3467aFfA4f54C0bDeb240cBb640c'};
-    const nfts = await Moralis.Web3.getNFTs(options);
+    // const nfts = await Moralis.Web3.getNFTs(options);
     console.log(nfts);
 }
 
@@ -59,7 +59,7 @@ const Login = ({navigation}) => {
     const connector = useWalletConnect();
 
     if(connector.connected){
-        navigation.navigate('profile')
+        navigation.navigate('home')
     }
 
     console.log('connector');

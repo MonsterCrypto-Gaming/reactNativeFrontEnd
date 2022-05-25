@@ -13,7 +13,10 @@ module.exports = {
         inlineRequires: true,
       },
       resolver: {
-        sourceExts: ['jsx', 'js', 'ts', 'tsx'], //add here
+        sourceExts: ['jsx', 'js', 'ts', 'tsx', 'cjs'], //add here
+      },
+      extraNodeModules: {
+        stream: require.resolve('stream-browserify'),
       },
     }),
   },

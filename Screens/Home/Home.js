@@ -1,8 +1,5 @@
 import React from 'react';
-import {View, FlatList, Text, StyleSheet} from 'react-native';
-import {images} from '../../assets/styles/global';
-import Card from '../../component/Card';
-import TopBarView from '../../component/TopBarView';
+import {View, FlatList, Text, StyleSheet, Dimensions, TouchableOpacity, Image} from 'react-native';
 import {DARK} from '../../Theme/Theme';
 
 
@@ -14,136 +11,120 @@ const ArtItem = ({art}) => (
   </View>
 );
 
+
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
+const monsterIcon = require('../../assets/images/monsterIcon.png')
+const plusIcon = require('../../assets/icons/plusIconNeon.png')
+const MARKET_ICON = require('../../assets/icons/marketIcon.png');
+const FRIENDS_ICON = require('../../assets/icons/friendsIcon.jpg');
+const DP = "https://www.rollingstone.co.uk/wp-content/uploads/sites/2/2021/12/Bored-Ape-Yacht-Club-NFT.jpg";
+
+
 const Home = ({navigation}) => {
-  const sampleArtData = [
+  
+  const gamesData = [
     {
-      index: 0,
-      name: 'Monster Pad',
-      token: '$MOP 34',
-      image: images.art_one,
-      baseColor: '#FF9900',
-      shadowColor: 'rgba(255, 153, 0, 0.6)',
+      index:0,
+      name:'Add Game',
+      token:null,
+      image: plusIcon,
+      imageType:'asset',
+      baseColor:DARK.SECONDARY_BUTTON,
     },
     {
       index: 1,
-      name: 'Valorant',
-      token: '$VALO 1.2K',
-      image: images.art_two,
-      baseColor: '#F8424F',
-      shadowColor: 'rgba(248, 66, 79, 0.6)',
-    },
-    {
-      index: 2,
-      name: 'Clash Royal',
-      token: '$CRL 117',
-      image: images.art_three,
-      baseColor: '#45BDCB',
-      shadowColor: 'rgba(69, 189, 203, 0.6)',
-    },
-    {
-      index: 3,
-      name: '',
-      token: '',
-      image: images.plus_icon,
-      baseColor: '#272727',
-      shadowColor: 'rgba(51, 51, 51, 0.6)',
+      name: 'Monster Pad',
+      token: '$MOP',
+      image: monsterIcon,
+      imageType:'asset',
+      baseColor: '#FF9900',
     },
   ];
 
   return (
     <View style={{width: '100%', height: '100%', backgroundColor:DARK.BACKGROUND_COLOR}}>
-      <TopBarView
-        headline={'your games'}
-        asset={images.user_placeholder}
-        size={[40, 40]}
-      />
-      <View style={styles.mainSection}>
+
+      <View style={{width:'100%', height:80, justifyContent:'space-between', flexDirection:'row', marginBottom:10}}>
+
+        <View style={{marginLeft:24, height:45,width:200 ,marginTop:17.5}}>
+
+          <Text style={{position:'absolute', zIndex:2, fontFamily:'Biryani-Bold', fontSize:30, color:DARK.PRIMARY_TEXT_COLOR, left:0}}>your games</Text>
+          <Text style={{position:'absolute', zIndex:1, fontFamily:'Biryani-Bold', fontSize:30, color:DARK.SECONDARY_BUTTON_TEXT, left:3, top:1, opacity:0.65}}>your games</Text>
+
+        </View>
+
+
+        <View style={{width:44,height:44, marginRight:24,marginTop:18}}>
+                    <TouchableOpacity style={{width:40, height:40, backgroundColor:DARK.PRIMARY_BUTTON, position:'absolute', zIndex:2, left:0,top:0, textAlign:'center', paddingVertical:0, elevation:5, borderColor:'black', borderWidth:1, borderRadius:3, justifyContent:'center'}} activeOpacity={0.6} onPress={()=>{navigation.navigate('friends')}}>
+
+                      <Image source={FRIENDS_ICON} style={{width:30, height:30, alignSelf:'center', borderRadius:2}}/>          
+
+                    </TouchableOpacity>
+                    <View style={{width:40, height:40, backgroundColor:DARK.PRIMARY_BUTTON,opacity:0.8 , position:'absolute',zIndex:1, left:4, top:4, fontSize:20,borderRadius:3}}></View>
+        </View>
+
+      </View>
+
+      <View style={{width:WIDTH-24, height:HEIGHT-90, alignSelf:'center'}}>
         <FlatList
-          data={sampleArtData}
+          data={gamesData}
           numColumns={2}
           renderItem={({item}) => {
             return (
-              <View style={styles.artItem}>
-                {item && (
-                  <>
-                    <Card
-                      image={item && item.image}
-                      height={150}
-                      width={150}
-                      colors={[item.baseColor, item.shadowColor]}
-                    />
-                    {item.name !== '' && (
-                      <Text style={styles.artTitle}>{item && item.name}</Text>
-                    )}
-                    {item.token !== '' && (
-                      <View style={styles.artTokenContiner}>
-                        <Text style={artToken(item.baseColor)}>
-                          {item && item.token}
-                        </Text>
-                      </View>
-                    )}
-                  </>
-                )}
-              </View>
+              <View style={{width:(WIDTH-24)/2,height:(WIDTH-24)/2 + 100, flexDirection:'column',borderColor:'black'}}> 
+    
+                  <View>
+                      <TouchableOpacity style={{width:((WIDTH-24)/2)-20, height:((WIDTH-24)/2)-20, backgroundColor:item.baseColor, position:'absolute', left:10,zIndex:2,justifyContent:'center', borderRadius:3,borderColor:'black',borderWidth:1,}} activeOpacity={0.6} onPress={()=>{
+                        if(item.index == 1){
+                          navigation.navigate('gameHome');
+                        }
+                      }}>
+                          {
+                          (item.imageType == 'asset')?
+                          <Image source={item.image} style={{marginLeft:5,width:((item.name == 'Add Game')?((WIDTH-24)/2)*0.5:((WIDTH-24)/2)-30), height:((item.name == 'Add Game')?((WIDTH-24)/2)*0.5:((WIDTH-24)/2)-30),backgroundColor:item.gameColor,resizeMode:'cover', alignSelf:'center'}}/>
+                          :
+                          <Image source={{uri:item.image}} style={{marginLeft:5,width:((WIDTH-24)/2)-30, height:((WIDTH-24)/2)-30,backgroundColor:item.gameColor,resizeMode:'cover'}}/>
+                          }
+
+                      </TouchableOpacity>
+                      <View style={{width:((WIDTH-24)/2)-20, height:((WIDTH-24)/2)-20, backgroundColor:item.baseColor, position:'absolute',zIndex:1,opacity:0.6,left:17,top:7, borderRadius:3,borderColor:'black',borderWidth:1}}></View>
+                  </View>
+
+                  <View style={{width:((WIDTH-24)/2)-20,borderRadius:3, alignSelf:'center', flexDirection:'row', marginTop:((WIDTH-24)/2), marginLeft:2}}>
+                      <Text style={{width:'100%',fontFamily:'Biryani-Bold', fontSize:15, textAlign:'center',color:DARK.PRIMARY_TEXT_COLOR,alignSelf:'center'}}>{item.name}</Text>
+                  </View>
+
+                  {(item.token != null)?
+                  <View style={{width:80, height:30, borderRadius:3, alignSelf:'center', flexDirection:'row', marginLeft:2, marginTop:10, backgroundColor:item.baseColor, borderRadius:5}}>
+                      <Text style={{width:'100%',fontFamily:'Biryani-Bold', fontSize:15, textAlign: 'center', color:DARK.PRIMARY_BUTTON_TEXT,alignSelf:'center'}}>{item.token}</Text>
+                  </View>:null}
+
+              </View>  
             );
           }}
           keyExtractor={item => item.index}
         />
       </View>
-      {/* extra navigation icons */}
-      <View style={styles.extraNavContainer}>
-        <View style={styles.extraNav}>
-          <Card image={images.market_icon} height={50} width={50} />
-        </View>
-        <View style={styles.extraNav}>
-          <Card image={images.bored_ape} height={50} width={50} />
-        </View>
+
+      <View style={{width:44,height:44, right:24, position:'absolute',zIndex:3, bottom:90, elevation:5}}>
+                    <TouchableOpacity style={{width:40, height:40, backgroundColor:DARK.PRIMARY_BUTTON, position:'absolute', zIndex:2, left:0,top:0, textAlign:'center', paddingVertical:0, elevation:5, borderColor:'black', borderWidth:1, borderRadius:3, justifyContent:'center'}} activeOpacity={0.6} onPress={()=>{navigation.navigate('marketPlace')}}>
+                      <Image source={MARKET_ICON} style={{width:35, height:35, alignSelf:'center', borderRadius:2}}/>
+                    </TouchableOpacity>
+                    <View style={{width:40, height:40, backgroundColor:DARK.PRIMARY_BUTTON,opacity:0.8 , position:'absolute',zIndex:1, left:4, top:4, fontSize:20,borderRadius:3}}></View>
       </View>
+
+
+      <View style={{width:44,height:44, right:24, position:'absolute',zIndex:3, bottom:30, elevation:5}}>
+                    <TouchableOpacity style={{width:40, height:40, backgroundColor:DARK.PRIMARY_BUTTON, position:'absolute', zIndex:2, left:0,top:0, textAlign:'center', paddingVertical:0, elevation:5, borderColor:'black', borderWidth:1, borderRadius:3, justifyContent:'center'}} activeOpacity={0.6} onPress={()=>{navigation.navigate('profile')}}>           
+                      <Image source={{uri:DP}} style={{width:35, height:35, alignSelf:'center', borderRadius:2}}/>
+                    </TouchableOpacity>
+                    <View style={{width:40, height:40, backgroundColor:DARK.PRIMARY_BUTTON,opacity:0.8 , position:'absolute',zIndex:1, left:4, top:4, fontSize:20,borderRadius:3}}></View>
+        </View>
+
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  mainSection: {
-    // height: '100%',
-  },
-  artItem: {
-    flex: 1,
-    margin: 20,
-  },
-  artTitle: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    lineHeight: 24,
-    marginTop: 25,
-    color: 'white',
-  },
-  artTokenContiner: {
-    alignItems: 'flex-start',
-  },
-  extraNavContainer: {
-    alignItems: 'flex-end',
-    paddingRight: 40,
-    marginBottom: 90,
-    marginTop: -25,
-    zIndex: -1,
-  },
-  extraNav: {
-    marginVertical: 20,
-  },
-});
-
-const artToken = color => ({
-  fontSize: 14,
-  fontWeight: 'bold',
-  lineHeight: 16,
-  marginTop: 4,
-  backgroundColor: color,
-  width: 'auto',
-  padding: 9,
-  borderRadius: 4,
-});
-
-// (WIDTH - 0.4 * WIDTH) / 2 + 5
 
 export default Home;

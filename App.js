@@ -31,9 +31,9 @@ import {
 import {MoralisProvider} from 'react-moralis';
 
 
-const Moralis = require('moralis/react-native.js');
-// const AsyncStorage = require('react-native').AsyncStorage;
-Moralis.setAsyncStorage(AsyncStorage);
+// const Moralis = require('moralis/react-native.js');
+// // const AsyncStorage = require('react-native').AsyncStorage;
+// Moralis.setAsyncStorage(AsyncStorage);
 
 
 
@@ -74,15 +74,15 @@ const App = () => {
 
   return (
 
-    <MoralisProvider serverUrl={serverUrl} appId={appId}>
+    // <MoralisProvider serverUrl={serverUrl} appId={appId}>
       <WalletConnectProvider
-        bridge="https://bridge.walletconnect.org"
-        // clientMeta={{
-        //   description: 'Connect with WalletConnect',
-        //   url: 'https://walletconnect.org',
-        //   icons: ['https://walletconnect.org/walletconnect-logo.png'],
-        //   name: 'WalletConnect',
-        // }}
+        // bridge="https://bridge.walletconnect.org"
+        clientMeta={{
+          description: 'Connect with Monster',
+          url: 'https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
+          icons: ['https://walletconnect.org/walletconnect-logo.png'],
+          name: 'Monster Portal',
+        }}
         redirectUrl={Platform.OS === 'web' ? window.location.origin : 'monster://'}
         storageOptions= {{
           asyncStorage: AsyncStorage,
@@ -91,7 +91,7 @@ const App = () => {
           <AuthStack/>
         </NavigationContainer>
       </WalletConnectProvider>
-    </MoralisProvider>
+    // </MoralisProvider>
 
   );
 };

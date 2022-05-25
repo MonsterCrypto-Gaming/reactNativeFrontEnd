@@ -2,7 +2,13 @@ import React from 'react';
 import {Easing, View} from "react-native";
 import { createNativeStackNavigator, CardStyleInterpolators,} from '@react-navigation/native-stack';
 import Login from '../Screens/Authentication/Login'
+import Home from '../Screens/Home/Home'
+import Marketplace from '../Screens/Marketplace/Marketplace'
 import Profile from '../Screens/Profile/Profile'
+import Friends from '../Screens/Friends/Friends'
+import GameHome from '../Screens/MonsterPadGame/GameHome'
+import BuyPack from '../Screens/MonsterPadGame/BuyPack'
+
 import { DARK } from '../Theme/Theme';
 
 
@@ -57,8 +63,30 @@ return(
             component={Login}/>
 
         <Auth_Stack.Screen
+            name="home"
+            component={Home}/>
+
+        <Auth_Stack.Screen
             name="profile"
             component={Profile}/>
+
+        <Auth_Stack.Screen
+            name="marketPlace"
+            component={Marketplace}/>
+
+        <Auth_Stack.Screen
+            name="friends"
+            component={Friends}/>
+
+        <Auth_Stack.Screen
+            name="gameHome"
+            component={GameHome}/>
+    
+
+        <Auth_Stack.Screen
+                name="buyPack"
+                component={BuyPack}/>
+
 
     </Auth_Stack.Navigator>
 );
