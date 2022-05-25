@@ -16,18 +16,6 @@ import {
 import {DARK} from '../../Theme/Theme';
 import {WalletChainImageMapping} from './WalletImageMapping';
 
-import { useWalletConnect } from '@walletconnect/react-native-dapp';
-import WalletConnectProvider from "@walletconnect/web3-provider";
-import { providers } from "ethers";
-
-// Import the crypto getRandomValues shim (**BEFORE** the shims)
-import "react-native-get-random-values"
-
-// Import the the ethers shims (**BEFORE** ethers)
-import "@ethersproject/shims"
-
-// Import the ethers library
-import { ethers } from "ethers";
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -69,56 +57,7 @@ const Profile = ({navigation}) => {
         console.log(connector.accounts);
 
         // console.log('connector2 accounts')
-        // console.log(connector2.accounts);
-
-
-
-
-            const mutate_abi = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"approved","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"approve","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"baseURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getApproved","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"safeMint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"index","type":"uint256"}],"name":"tokenByIndex","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"uint256","name":"index","type":"uint256"}],"name":"tokenOfOwnerByIndex","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"tokenURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}];
-            
-            //const provider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161");
-            
-             //Create WalletConnect Provider
-            const provider = new WalletConnectProvider({
-                rpc: {
-                    4: "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
-                },
-                chainId: 4,
-                connector: connector,
-                qrcode: false,
-            });
-
-            
-            let web3Provider = null;
-            
-            let signer = null;
-
-            const polygonpenguinMutateAddress = "0x2c4c9A8DD00b5286DF825543Ba199dd2eD1cbD4b";
-            
-            const polygonMutateAbi = JSON.stringify(mutate_abi);
-            
-            let polypenguinMutate = null;
-        
-        async function Initialize (){
-            await provider.enable();
-
-            web3Provider = new providers.Web3Provider(provider);
-            signer = web3Provider.getSigner();
-
-            polypenguinMutate = new ethers.Contract(
-                polygonpenguinMutateAddress,
-                polygonMutateAbi,
-                signer
-            );
-
-            console.log('polypenguinMutate')
-            console.log(polypenguinMutate)
-            
-        }
-            
-        Initialize();
-     
-            
+        // console.log(connector2.accounts);         
 
 
         const domainName = connector.accounts[0];
@@ -142,59 +81,9 @@ const Profile = ({navigation}) => {
                     <Text style={{width:'62%',height:20,fontSize:13, fontFamily:'Biryani-Bold', color:DARK.TERTIARY_TEXT_COLOR, textAlign: 'center', alignSelf:'center', marginTop:5}} ellipsizeMode='middle' numberOfLines={1} >{domainName}</Text>
     
                     <TouchableOpacity style={{width:30, height:30,position:'absolute', left:(WIDTH-125)/6, top:50}} activeOpacity={0.5} onPress={async ()=>{
-                        
-                        // polypenguinMutate.
-
-                        let rawTxn = await polypenguinMutate.populateTransaction.safeMint();
-
-                        // let rawTxn = await polypenguinMutate.populateTransaction.safeMint({
-                        //     value: ethers.utils.parseEther("0"),
-                        //     gasPrice:1000000,
-                        //     gasLimit:1000000,
-                            
-                        // });
-                        // //let encodedData = polypenguinMutate.interface.functions.encode.safeMint();
-
-                        // //rawTxn.
-
-                        // console.log('rawTxn.data')
-                        // console.log(rawTxn.data)
-
-                        // // let txn = await signer.sendTransaction(rawTxn);
-
-                        // // let receipt =  await txn.wait();
-
-                        // // console.log('receipt')
-                        // // console.log(receipt)
-
-                        const txCount = await web3Provider.getTransactionCount(connector.accounts[0],"latest");
-                        console.log('txCount')
-                        console.log(txCount)
-
-                        let returnObject = await connector.sendTransaction(
-                            {
-                                from:connector.accounts[0],
-                                data:rawTxn.data,
-                                gasPrice:1000000,
-                                gas:1000000,
-                                //value:ethers.utils.parseEther("0")._hex
-                                // value:'0',
-                                // nonce: txCount
-
-                            }
-                        );
-
-                        console.log('connector.rpc')
-                        console.log(connector.rpcUrl)
-
-                        console.log('returnObject')
-                        console.log(returnObject)
-
-                        console.log('rawTxn')
-                        console.log(rawTxn)
             
-                        // connector.killSession();
-                        // navigation.navigate('login')
+                        connector.killSession();
+                        navigation.navigate('login')
                     }}>
                         <View style={{width:30, height:30, backgroundColor:DARK.PRIMARY_BUTTON, zIndex:2, justifyContent:'center',position:'absolute',top:0,left:0, fontSize:20, fontFamily:'Biryani-SemiBold', borderRadius:3, borderWidth:1, borderColor:'black',}}>
                             <Image source={DISCONNECT_ICON} style={{width:25, height:25, alignSelf:'center', borderRadius:2}}/>
