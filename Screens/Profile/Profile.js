@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import {DARK} from '../../Theme/Theme';
 import {WalletChainImageMapping} from './WalletImageMapping';
+import { useWalletConnect } from '@walletconnect/react-native-dapp';
 
 
 const WIDTH = Dimensions.get('window').width;
