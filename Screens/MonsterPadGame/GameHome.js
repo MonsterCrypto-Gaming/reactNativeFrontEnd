@@ -939,11 +939,6 @@ const market_mutate_abi = [
 	},
 	{
 		"inputs": [],
-		"name": "NoProceeds",
-		"type": "error"
-	},
-	{
-		"inputs": [],
 		"name": "NotApprovedForMarketplace",
 		"type": "error"
 	},
@@ -1132,13 +1127,6 @@ const market_mutate_abi = [
 	},
 	{
 		"inputs": [],
-		"name": "withdrawProceeds",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
 		"name": "getAllNFTs",
 		"outputs": [
 			{
@@ -1186,25 +1174,6 @@ const market_mutate_abi = [
 				"internalType": "struct NftMarketplace.Listing",
 				"name": "",
 				"type": "tuple"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "seller",
-				"type": "address"
-			}
-		],
-		"name": "getProceeds",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -1333,7 +1302,7 @@ let web3Provider = null;
 
 let signer = null;
 
-const marketpolygonpenguinMutateAddress  = '0x69b239F92208E27491a38cF46A7e45C3D67D5b96';
+const marketpolygonpenguinMutateAddress  = '0x3c0B33a45fA099296f62ed5144C9df323FD9bbDD';
 const polygonpenguinMutateAddress = "0x6CE24Db542a10c02E1BB556E8D60836660cAE994";
 
 const polygonMutateAbi = JSON.stringify(mutate_abi);
