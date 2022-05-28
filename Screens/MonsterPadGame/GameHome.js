@@ -38,6 +38,7 @@ const GameHome = ({navigation}) => {
 const connector = useWalletConnect();
 const [monstersOwned,setMonstersOwned] = useState([]);
 const [initialization,setInitializationState] = useState(false);
+const [listItem,setListItem] = useState('not clicked');
 
 const mutate_abi = [
 	{
@@ -1378,6 +1379,7 @@ async function Initialize (){
     for (let m=0; m<=count-1; m++){
   
       let tokenId = await polypenguinMutate.tokenOfOwnerByIndex(connector.accounts[0],m);
+	  let listingStatus = await marketpolypenguinMutate.IdToListingStatus(tokenId);
       let string = await polypenguinMutate.tokenURI(tokenId);
       let monsterId = string.split('ipfs.nftstorage.link/')[1].split('.')[0];
 
@@ -1400,7 +1402,10 @@ async function Initialize (){
 
         if(currentMonsterArray[n].assetInGameId == monsterId){
           currentMonsterArray[n].count = currentMonsterArray[n].count + 1;
-          currentMonsterArray[n].tokenId = tokenId,
+		  if(currentMonsterArray[n].listingStatus == false){
+          currentMonsterArray[n].tokenId = tokenId;
+		  }
+		  currentMonsterArray[n].listingStatus = listingStatus;
           alreadyPresent = true;
           break;
         }
@@ -1418,6 +1423,7 @@ async function Initialize (){
                   index:currentMonsterArray.length,
                   assetName:monsters[n].name,
                   tokenId:tokenId,
+				  listingStatus:listingStatus,
                   count:1,
                   assetInGameId:monsterId,
                   image: monsters[n].image,
@@ -1445,183 +1451,16 @@ async function Initialize (){
     }
 
 
-    async function buy (item){
-
-    }
-  
-    async function listItem (item){
-      
-      await provider.enable();
-
-      web3Provider = new providers.Web3Provider(provider);
-      signer = web3Provider.getSigner();
-  
-      polypenguinMutate = await new ethers.Contract(
-          polygonpenguinMutateAddress,
-          polygonMutateAbi,
-          signer
-      );
-
-      marketpolypenguinMutate = await new ethers.Contract(
-        marketpolygonpenguinMutateAddress,
-        marketpolygonMutateAbi,
-        signer
-      );
-
-      console.log('polypenguinMutate')
-      console.log(polypenguinMutate)
-
-      console.log('marketpolypenguinMutate')
-      console.log(marketpolypenguinMutate)
-  
-      console.log('item.tokenId')
-      console.log(parseInt(item.tokenId.toString()))
-
-      let rawTxn0 = await polypenguinMutate.populateTransaction.approve(polygonpenguinMutateAddress,parseInt(item.tokenId.toString()));
-  
-      console.log('rawTxn0')
-      console.log(rawTxn0)
-  
-      let txn0 = await signer.sendTransaction(rawTxn0);
-  
-      console.log('txn0')
-      console.log(txn0)
-  
-      let receipt0 =  await txn0.wait();
-  
-      console.log('receipt0')
-      console.log(receipt0)
-
-
-      let rawTxn = await marketpolypenguinMutate.populateTransaction.listItem(polygonpenguinMutateAddress,parseInt(item.tokenId.toString()), 100000,{
-        gasPrice: 100000,
-        gasLimit: 100000,
-      });
-  
-      console.log('rawTxn')
-      console.log(rawTxn)
-  
-      let txn = await signer.sendTransaction(rawTxn);
-  
-      console.log('txn')
-      console.log(txn)
-  
-      let receipt =  await txn.wait();
-  
-      console.log('receipt')
-      console.log(receipt)
-  
-    }
   
 
   
-  const listData = [
-    {
-      index:0,
-      assetName:'Greenip',
-      listPrice:30,
-      token:'$MOP',
-      assetInGameId:'101',
-      image: require('../../metaData/monsterAssets/101.png'),
-      currentOwnerAddress:'0xbc126537613432166154abc',
-      nftId:'0xbc126537613432166154abc718821',
-      baseColor:'#FF9900',
-      rarity:'Common',
-    },
-    {
-        index:1,
-        assetName:'Mythikos',
-        listPrice:600,
-        token:'$MOP',
-        assetInGameId:'112',
-        image: require('../../metaData/monsterAssets/112.png'),
-        currentOwnerAddress:'0xbc126537613432166154abc',
-        nftId:'0xbc12as32ds432166154abc718821',
-        baseColor:'#FF9900',
-        rarity:'Ultra Rare',
-    },
-    {
-        index:2,
-        assetName:'Rabuddaa',
-        listPrice:450,
-        token:'$MOP',
-        assetInGameId:'109',
-        image: require('../../metaData/monsterAssets/109.png'),
-        currentOwnerAddress:'0xbc126537613432166154abc',
-        nftId:'0xa3456213332ds432166154abc718821',
-        baseColor:'#FF9900',
-        rarity:'Ultra Rare',
-    },
-    {
-        index:3,
-        assetName:'Flyfury',
-        listPrice:15,
-        token:'$MOP',
-        assetInGameId:'114',
-        image: require('../../metaData/monsterAssets/114.png'),
-        currentOwnerAddress:'0xbc126537613432166154abc',
-        nftId:'0xa3456213332ds12abc334abc718821',
-        baseColor:'#FF9900',
-        rarity:'Common',
-    },
-  ];
-
-
-
-
-  // let count = balanceOf(connector.accounts[0])
-	// //loop over
-	// let tokenId = tokenOfOwner(connector.accounts[0],0)
-	// let string = tokenUri(tokenId)
-
-  // let monstersOwned = [
-  //   {
-  //     index:0,
-  //     assetName:'Greenip',
-  //     count:28,
-  //     assetInGameId:'101',
-  //     image: require('../../metaData/monsterAssets/101.png'),
-  //     nftId:['0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821',,'0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821',],
-  //     baseColor:'#FF9900',
-  //     rarity:'Common',
-  //   },
-  //   {
-  //       index:1,
-  //       assetName:'Bloonip',
-  //       count:3,
-  //       assetInGameId:'102',
-  //       image: require('../../metaData/monsterAssets/102.png'),
-  //       nftId:['0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821',],
-  //       baseColor:'#FF9900',
-  //       rarity:'Rare',
-  //     },
-  //   {
-  //       index:2,
-  //       assetName:'Terapartor',
-  //       count:14,
-  //       assetInGameId:'115',
-  //       image: require('../../metaData/monsterAssets/115.png'),
-  //       currentOwnerAddress:'0xbc126537613432166154abc',
-  //       nftId:['0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821','0xbc126537613432166154abc718821',],
-  //       baseColor:'#FF9900',
-  //       rarity:'Common',
-  //   },
-  //   {
-  //       index:3,
-  //       assetName:'Champlava',
-  //       count:2,
-  //       assetInGameId:'106',
-  //       image: require('../../metaData/monsterAssets/106.png'),
-  //       currentOwnerAddress:'0xbc126537613432166154abc',
-  //       nftId:['0xbc126537613432166154abc718821','0xbc126537613432166154abc718821'],
-  //       baseColor:'#FF9900',
-  //       rarity:'Ultra Rare',
-  //   },
-  // ];
 
   const [monsterAssets, setMonsterAssets] = useState(monstersOwned);
 
   const [reloadValue, setReloadValue] = useState(0);
+  const [listPriceValue, setListPriceValue] = useState(null);
+  const [listItemName, setListItemName] = useState(null);
+  const [selectedListItem, setSelectedListItem] = useState(null);
 
 
   const domainName = connector.accounts[0];
@@ -1632,6 +1471,103 @@ async function Initialize (){
     console.log(reloadValue)
     setReloadValue(reloadValue+1)
   }
+
+  
+	async function listItemFn (item){
+		await provider.enable();
+
+		  web3Provider = new providers.Web3Provider(provider);
+		  signer = web3Provider.getSigner();
+		//check if item is 
+	  
+		console.log('item')
+		console.log(item)
+
+
+		  polypenguinMutate = await new ethers.Contract(
+		      polygonpenguinMutateAddress,
+		      polygonMutateAbi,
+		      signer
+		  );
+	
+		  marketpolypenguinMutate = await new ethers.Contract(
+		    marketpolygonpenguinMutateAddress,
+		    marketpolygonMutateAbi,
+		    signer
+		  );
+	
+		  console.log('polypenguinMutate')
+		  console.log(polypenguinMutate)
+	
+		  console.log('marketpolypenguinMutate')
+		  console.log(marketpolypenguinMutate)
+	  
+		//   console.log('item.tokenId')
+		//   console.log(parseInt(item.tokenId.toString()))
+
+		//setTimeout(()=>{setListItem('Open MetaMask to approve');},1000);
+		  
+		setListItem('Open MetaMask to approve');
+			let rawTxn0 = await polypenguinMutate.populateTransaction.approve(marketpolygonpenguinMutateAddress,parseInt(item.tokenId.toString()));
+	  
+		  console.log('rawTxn0')
+		  console.log(rawTxn0)
+
+	  
+		  let txn0 = await signer.sendTransaction(rawTxn0);
+	  
+		  console.log('txn0')
+		  console.log(txn0)
+
+		// setTimeout(()=>{setListItem('Approving...');},2000);
+		  setListItem('Approving...');
+	  
+		  let receipt0 =  await txn0.wait();
+	  
+		  console.log('receipt0')
+		  console.log(receipt0)
+	
+		setListItem('Open Metamask to List for sale');
+
+	// 	setTimeout(()=>{setListItem('Open Metamask to List for sale');
+	// console.log(listPriceValue)
+	// },3000);
+	
+		  let rawTxn = await marketpolypenguinMutate.populateTransaction.listItem(
+			  polygonpenguinMutateAddress,
+			  parseInt(item.tokenId.toString()), 
+			  ethers.utils.parseEther(listPriceValue.toString())
+			  ,{
+				gasPrice:2500000000,
+				gasLimit:500000,
+		  		});
+	  
+		  console.log('rawTxn')
+		  console.log(rawTxn)
+	  
+
+
+		// setTimeout(()=>{setListItem('Listing');},4000);
+
+		  let txn = await signer.sendTransaction(rawTxn);
+	  
+		  console.log('txn')
+		  console.log(txn)
+		  setListItem('Listing');
+	  
+		  let receipt =  await txn.wait();
+	  
+		  console.log('receipt')
+		  console.log(receipt)
+
+		  setListItem('Listed');
+
+		// setTimeout(()=>{setListItem('Listed');},5000);
+
+		setTimeout(()=>{navigation.navigate('home')}, 1000);
+		  
+	  
+		}
 
   return (
     <View style={{width: '100%', height: '100%', backgroundColor:DARK.BACKGROUND_COLOR}}>
@@ -1700,6 +1636,73 @@ async function Initialize (){
 
     
     </View>
+
+	{(listItem == 'Clicked' || listItem == 'Open MetaMask to approve'|| listItem == 'Approving...'|| listItem == 'Open Metamask to List for sale' || listItem == 'Listing' || listItem == 'Listed')?
+	<View style={{width:'100%', height:HEIGHT, top:120, zIndex:4, position:'absolute', backgroundColor:'rgba(0,0,0,0.9)'}}>
+		<View style={{width:'75%', backgroundColor:DARK.SECONDARY_BUTTON, alignSelf:'center', marginTop:100, borderRadius:5}}>
+			<Text style={{width:'85%', textAlign:'center', fontFamily:'Biryani-Bold', fontSize:14, lineHeight:20, marginTop:20, alignSelf:'center', marginBottom:10}}>
+			{(listItem == 'Clicked')?
+			'You can list only one card per breed at a time. If someone buys your card the level of your card decreases by 1. If you have just one card you will lose the card once sold.'
+			:
+			(listItem == 'Open MetaMask to approve')?
+			'Open MetaMask to Approve':
+			(listItem == 'Approving...')?
+			'Approving...':
+			(listItem == 'Open Metamask to List for sale')?
+			'Open Metamask to List for sale':
+			(listItem == 'Listing')?
+			'Listing':
+			(listItem == 'Listed')?
+			'Listed':null
+			}
+			</Text>
+			<Text style={{width:'85%', textAlign:'center', fontFamily:'Biryani-Bold', fontSize:14, lineHeight:20, alignSelf:'center', marginBottom:20, color:DARK.SECONDARY_TEXT_COLOR}}>You are Listing '{listItemName}'</Text>
+			
+			{(listItem == 'Clicked')?
+			<View style={{width:'85%', height:45, alignSelf:'center', marginBottom:20}}>
+
+				<TextInput
+					style={{
+					width: '100%',
+					height: 40,
+					backgroundColor: DARK.PRIMARY_TEXT_INPUT,
+					position: 'absolute',
+					zIndex: 2,
+					left: 0,
+					textAlign: 'center',
+					fontSize: 14,
+					fontFamily: 'Biryani-SemiBold',
+					paddingVertical: 0,
+					elevation: 5,
+					borderColor: 'black',
+					borderWidth: 1,
+					borderRadius: 3,
+					}}
+					keyboardType='numeric'
+					placeholderTextColor={'#777777'}
+					placeholder={'Price for sale in ETH'}
+					underlineColorAndroid="transparent"
+					value={listPriceValue}
+					onChangeText={setListPriceValue}
+				/>
+
+					<View style={{width:'100%', height:40, backgroundColor:DARK.PRIMARY_TEXT_INPUT,opacity:0.8 , position:'absolute',zIndex:1, left:5, top:5, borderRadius:3}}></View>
+			</View>:null}
+			
+			{(listItem == 'Clicked')?
+			<View style={{width:150, height:45, alignSelf:'center', marginBottom:20}}>
+				<TouchableOpacity style={{width:145, height:(45), backgroundColor:DARK.PRIMARY_BUTTON, position:'absolute', left:0,top:0,zIndex:2,justifyContent:'center', borderRadius:3,borderColor:'black',borderWidth:1,}} activeOpacity={0.6} onPress={async ()=>{
+					if(listPriceValue!=null){
+					listItemFn(selectedListItem);
+					}
+					}}>
+					<Text style={{fontFamily:'Biryani-Bold', fontSize:15, textAlign: 'center', color:DARK.PRIMARY_BUTTON_TEXT,alignSelf:'center'}}>approve for sale</Text>
+				</TouchableOpacity>
+				<View style={{width:145, height:45, backgroundColor:DARK.PRIMARY_BUTTON, position:'absolute',zIndex:1,opacity:0.6,left:5,top:5, borderRadius:3,borderColor:'black',borderWidth:1}}></View>
+			</View>:null}
+
+		</View>
+	</View>:null}
 
     <View style={{width:WIDTH-24, alignSelf:'center', marginTop:24,}}>
 
@@ -1787,10 +1790,18 @@ async function Initialize (){
                         </View>:null}
 
                         <View style={{width:90, height:45, marginLeft:20}}>
-                            <TouchableOpacity style={{width:85, height:(45), backgroundColor:DARK.PRIMARY_BUTTON, position:'absolute', left:0,top:0,zIndex:2,justifyContent:'center', borderRadius:3,borderColor:'black',borderWidth:1,}} activeOpacity={0.6} onPress={()=>{listItem(item);}}>
+						{(item.listingStatus == true)?
+						<TouchableOpacity style={{width:215, height:(45), backgroundColor:DARK.TERTIARY_BUTTON, position:'absolute', left:0,top:0,zIndex:2,justifyContent:'center', borderRadius:3,borderColor:'black',borderWidth:1,}} activeOpacity={0.6} onPress={()=>{}}>
+                                <Text style={{fontFamily:'Biryani-Bold', fontSize:15, textAlign: 'center', color:DARK.PRIMARY_BUTTON_TEXT,alignSelf:'center'}}>one card already listed</Text>
+                        </TouchableOpacity>
+						:
+                            <TouchableOpacity style={{width:85, height:(45), backgroundColor:DARK.PRIMARY_BUTTON, position:'absolute', left:0,top:0,zIndex:2,justifyContent:'center', borderRadius:3,borderColor:'black',borderWidth:1,}} activeOpacity={0.6} onPress={()=>{setListItem('Clicked'); setListItemName(item.assetName); setSelectedListItem(item);}}>
                                 <Text style={{fontFamily:'Biryani-Bold', fontSize:15, textAlign: 'center', color:DARK.PRIMARY_BUTTON_TEXT,alignSelf:'center'}}>list/sell</Text>
                             </TouchableOpacity>
-                            <View style={{width:85, height:45, backgroundColor:DARK.PRIMARY_BUTTON, position:'absolute',zIndex:1,opacity:0.6,left:5,top:5, borderRadius:3,borderColor:'black',borderWidth:1}}></View>
+						}
+							{(item.listingStatus == true)?
+								<View style={{width:215, height:45, backgroundColor:DARK.TERTIARY_BUTTON, position:'absolute',zIndex:1,opacity:0.6,left:5,top:5, borderRadius:3,borderColor:'black',borderWidth:1}}></View>
+                            :<View style={{width:85, height:45, backgroundColor:DARK.PRIMARY_BUTTON, position:'absolute',zIndex:1,opacity:0.6,left:5,top:5, borderRadius:3,borderColor:'black',borderWidth:1}}></View>}
                         </View>
 
                   </View>
@@ -1800,7 +1811,7 @@ async function Initialize (){
           }}
           keyExtractor={item => item.index}
         />
-      </View>
+    </View>
 
     </View>
   );
