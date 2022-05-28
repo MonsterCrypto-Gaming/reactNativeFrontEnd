@@ -1,6 +1,6 @@
 # reactNativeFrontEnd
 
-Use transactionTestWC branch for the latest Build <br />
+Use Main branch for the latest Build <br />
  <br />
 Commands to run after cloning project<br />
  <br />
